@@ -1,0 +1,16 @@
+version: "2.0"
+
+services:
+  app:
+    container_name: vuFind-env
+    build: .
+    ports:
+      - "8181:80"
+      - "1338:22"
+      - "3316:3306"
+    volumes:
+      - ./assets:/usr/share/assets
+    environment:
+      TZ: "Asia/Jakarta"
+    restart: always
+    tty: true
