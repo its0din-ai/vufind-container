@@ -41,13 +41,13 @@ RUN mkdir /var/run/sshd && \
 
 RUN mkdir /nonexistent
 
-COPY ./assets/entrypoint.sh /usr/local/bin/
+COPY ./assets/entrypoints.sh /
 COPY ./assets/configsql.sh /usr/local/bin/
 
-RUN chmod +x /usr/local/bin/entrypoint.sh && \
+RUN chmod +x /entrypoints.sh && \
     chmod +x /usr/local/bin/configsql.sh
 
 EXPOSE 80 22 3306
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoints.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
