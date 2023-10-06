@@ -9,5 +9,3 @@ mysql -u root -pvufind_databases -e "FLUSH PRIVILEGES;"
 mysql -u root -pvufind_databases -e "UPDATE mysql.user SET host='%' WHERE user='root';"
 
 service mysql restart
-
-tail -f /dev/null

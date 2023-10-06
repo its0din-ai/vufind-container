@@ -12,5 +12,5 @@ services:
       - ./assets:/usr/share/assets
     environment:
       TZ: "Asia/Jakarta"
-    restart: always
+    restart: on-failure
     tty: true

@@ -23,7 +23,9 @@ RUN apt-get update && apt-get install -y \
     net-tools \
     nano \
     sudo \
-    mysql-server
+    lsof \
+    mysql-server \
+    default-jdk
     
 RUN adduser --disabled-password --gecos "" vufind && \
     echo 'vufind:vufind' | chpasswd
@@ -41,13 +43,17 @@ RUN mkdir /var/run/sshd && \
 
 RUN mkdir /nonexistent
 
-COPY ./assets/entrypoints.sh /
+RUN wget -O /tmp/vufind-9.0.3.tar.gz https://github.com/vufind-org/vufind/releases/download/v9.0.3/vufind-9.0.3.tar.gz
+RUN tar -xzf /tmp/vufind-9.0.3.tar.gz -C /tmp/
+RUN sudo mv /tmp/vufind-9.0.3 /usr/local/vufind
+
+COPY ./assets/entrypoint.sh /
 COPY ./assets/configsql.sh /usr/local/bin/
 
-RUN chmod +x /entrypoints.sh && \
+RUN chmod +x /entrypoint.sh && \
     chmod +x /usr/local/bin/configsql.sh
 
 EXPOSE 80 22 3306
 
-ENTRYPOINT ["/entrypoints.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
